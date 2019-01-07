@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1
+      id: 001
       author: jino.george
       changes:
         - createTable:
@@ -8,13 +8,40 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: binary(16)
+                  type: char(36)
                   constraints:
                     primaryKey: true
                     nullable: false
+              - column:
+                  name: title
+                  type: varchar(100)
               - column:
                   name: first_name
                   type: varchar(255)
               - column:
                   name: last_name
                   type: varchar(255)
+              - column:
+                  name: birth_date
+                  type: date
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: street
+                  type: varchar(255)
+              - column:
+                  name: house_number
+                  type: varchar(100)
+              - column:
+                  name: city
+                  type: varchar(255)
+              - column:
+                  name: state
+                  type: varchar(255)
+              - column:
+                  name: country
+                  type: varchar(255)
+              - column:
+                  name: postal_code
+                  type: varchar(100)

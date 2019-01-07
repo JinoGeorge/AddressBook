@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -21,6 +22,7 @@ abstract class BaseEntity {
     @Id
     @GeneratedValue
     @NotNull
+    @Column(columnDefinition = "CHAR(36)")
     private final UUID id;
 }
 

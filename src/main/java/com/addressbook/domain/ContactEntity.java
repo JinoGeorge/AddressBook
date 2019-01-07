@@ -32,7 +32,7 @@ public class ContactEntity extends BaseEntity {
     private String email;
     @Valid
     private Address address;
-    @OneToMany
+    @OneToMany(mappedBy = "contact")
     private Collection<PhoneNumber> phoneNumbers;
 
     @AssertTrue(message = "Both FirstName and Last Name can not be blank.")
