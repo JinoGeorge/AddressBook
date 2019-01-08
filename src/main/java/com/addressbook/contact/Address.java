@@ -1,4 +1,4 @@
-package com.addressbook.domain;
+package com.addressbook.contact;
 
 
 import lombok.AccessLevel;

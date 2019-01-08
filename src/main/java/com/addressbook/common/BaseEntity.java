@@ -1,6 +1,5 @@
-package com.addressbook.domain;
+package com.addressbook.common;
 
-import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,10 +14,10 @@ import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode
-@NoArgsConstructor(access = AccessLevel.PACKAGE, force = true)
+@NoArgsConstructor(force = true)
 @ToString
 @MappedSuperclass
-abstract class BaseEntity {
+public abstract class BaseEntity {
     @Id
     @GeneratedValue
     @NotNull

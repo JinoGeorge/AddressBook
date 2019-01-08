@@ -1,5 +1,7 @@
-package com.addressbook.domain;
+package com.addressbook.contact;
 
+import com.addressbook.common.BaseEntity;
+import com.addressbook.phonenumber.PhoneNumberEntity;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,7 +35,7 @@ public class ContactEntity extends BaseEntity {
     @Valid
     private Address address;
     @OneToMany(mappedBy = "contact")
-    private Collection<PhoneNumber> phoneNumbers;
+    private Collection<@Valid PhoneNumberEntity> phoneNumbers;
 
     @AssertTrue(message = "Both FirstName and Last Name can not be blank.")
     private boolean isValidNames() {

@@ -1,5 +1,7 @@
-package com.addressbook.domain;
+package com.addressbook.phonenumber;
 
+import com.addressbook.common.BaseEntity;
+import com.addressbook.contact.ContactEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -24,7 +26,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity(name = "phone_number")
-public class PhoneNumber extends BaseEntity {
+public class PhoneNumberEntity extends BaseEntity {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
