@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -23,7 +24,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE, force = true)
+@RequiredArgsConstructor
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity(name = "phone_number")
 public class PhoneNumberEntity extends BaseEntity {
@@ -34,9 +36,9 @@ public class PhoneNumberEntity extends BaseEntity {
     private ContactEntity contact;
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private final Type type;
     @NotBlank
-    private String number;
+    private final String number;
 
     enum Type {
         HOME, WORK, MOBILE

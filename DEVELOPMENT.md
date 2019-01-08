@@ -69,4 +69,5 @@ spring.liquibase.change-log=classpath:/db/changelog/changelog-master.yaml
 ```
     spring.jpa.hibernate.ddl-auto=validate
 ```
-##### 5. Create database repositories (DAO)
+##### 5. Create database repositories (DAO), services and resources (rest end points)
+##### 6. 

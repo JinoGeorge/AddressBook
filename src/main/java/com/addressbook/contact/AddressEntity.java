@@ -11,10 +11,10 @@ import javax.persistence.Embeddable;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @Embeddable
-public class Address {
+public class AddressEntity {
     private String street;
     private String houseNumber;
     private String city;

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -33,12 +34,20 @@ public class ContactEntity extends BaseEntity {
     @Email
     private String email;
     @Valid
-    private Address address;
-    @OneToMany(mappedBy = "contact")
+    private AddressEntity address;
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.PERSIST)
     private Collection<@Valid PhoneNumberEntity> phoneNumbers;
 
     @AssertTrue(message = "Both FirstName and Last Name can not be blank.")
     private boolean isValidNames() {
         return !isAllBlank(firstName, lastName);
+    }
+
+    @Valid
+    public ContactEntity(String title, String firstName, String lastName, @Email String email) {
+        this.title = title;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 }
