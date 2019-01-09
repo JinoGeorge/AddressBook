@@ -27,8 +27,12 @@ import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 @RequestMapping("contacts")
 public class ContactResource {
 
-    @Autowired
     private ContactService contactService;
+
+    @Autowired
+    public ContactResource(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
     @GetMapping("id")
     public Contact get(@PathVariable @NotNull UUID id) {

@@ -25,7 +25,7 @@ public class JsonExportBatchJob {
     private JobBuilderFactory jobBuilderFactory;
     private StepBuilderFactory stepBuilderFactory;
     private ContactRepository contactRepository;
-    private Resource outputResource = new FileSystemResource("output/contacts_export.json");
+    private Resource outputResource = new FileSystemResource("target/output/contacts_export.json");
 
     @Autowired
     public JsonExportBatchJob(ContactRepository contactRepository, JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory) {

@@ -15,8 +15,12 @@ import java.util.stream.Collectors;
 @RestController
 public class PhoneNumberResource {
 
-    @Autowired
     private PhoneNumberService phoneNumberService;
+
+    @Autowired
+    public PhoneNumberResource(PhoneNumberService phoneNumberService) {
+        this.phoneNumberService = phoneNumberService;
+    }
 
     @GetMapping("phonenumbers/{id}")
     public PhoneNumber get(@PathVariable @NotNull UUID id) {
