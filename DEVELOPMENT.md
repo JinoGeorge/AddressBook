@@ -83,3 +83,19 @@ By default, Spring runs all the job as soon as it has started its context. If yo
 ```
     spring.batch.job.enabled=false
 ```
+##### 5. Add OAuth 2.0 security for the rest end endpoints
+###### Add security dependencies
+```
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<version>2.3.3.RELEASE</version>
+		</dependency>
+```
+###### To read about password encoding refer blog: https://spring.io/blog/2017/11/01/spring-security-5-0-0-rc1-released#password-encoding
+###### Implement ResourceServerConfig, AuthorizationServerConfig, SecurityConfig and UserDetailsService
+###### Create oAuth 2.0 tables for access token and refresh tokens

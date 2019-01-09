@@ -5,6 +5,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
@@ -13,6 +15,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("api/phonenumbers")
 public class PhoneNumberResource {
 
     private PhoneNumberService phoneNumberService;
@@ -22,15 +25,15 @@ public class PhoneNumberResource {
         this.phoneNumberService = phoneNumberService;
     }
 
-    @GetMapping("phonenumbers/{id}")
+    @GetMapping("{id}")
     public PhoneNumber get(@PathVariable @NotNull UUID id) {
         return phoneNumberService.getById(id)
                 .map(PhoneNumber::fromEntity)
                 .orElse(null);
     }
 
-    @GetMapping("contacts/{contactId}/phonenumbers")
-    public Collection<PhoneNumber> getForContact(@PathVariable @NotNull UUID contactId) {
+    @GetMapping(params = "contactId")
+    public Collection<PhoneNumber> getForContact(@RequestParam("contactId") @NotNull UUID contactId) {
         return phoneNumberService.getForContact(contactId)
                 .stream()
                 .map(PhoneNumber::fromEntity)
