@@ -70,4 +70,16 @@ spring.liquibase.change-log=classpath:/db/changelog/changelog-master.yaml
     spring.jpa.hibernate.ddl-auto=validate
 ```
 ##### 5. Create database repositories (DAO), services and resources (rest end points)
-##### 6. 
+##### 6. Create batch jobs
+
+```
+    <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-batch</artifactId>
+    <dependency>
+```
+###### Invoking the Job
+By default, Spring runs all the job as soon as it has started its context. If you want to disable that you can define below the property
+```
+    spring.batch.job.enabled=false
+```
