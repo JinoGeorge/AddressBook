@@ -1,5 +1,7 @@
 package com.addressbook.phonenumber;
 
+import com.addressbook.contact.ContactEntity;
+import com.addressbook.contact.ContactService;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,32 +14,31 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("api/phonenumbers")
 public class PhoneNumberResource {
 
     private PhoneNumberService phoneNumberService;
+    private ContactService contactService;
 
     @Autowired
-    public PhoneNumberResource(PhoneNumberService phoneNumberService) {
+    public PhoneNumberResource(ContactService contactService, PhoneNumberService phoneNumberService) {
         this.phoneNumberService = phoneNumberService;
     }
 
     @GetMapping("{id}")
     public PhoneNumber get(@PathVariable @NotNull UUID id) {
-        return phoneNumberService.getById(id)
-                .map(PhoneNumber::fromEntity)
-                .orElse(null);
+        return phoneNumberService.getById(id).map(PhoneNumber::fromEntity).orElse(null);
     }
 
     @GetMapping(params = "contactId")
     public Collection<PhoneNumber> getForContact(@RequestParam("contactId") @NotNull UUID contactId) {
-        return phoneNumberService.getForContact(contactId)
-                .stream()
-                .map(PhoneNumber::fromEntity)
-                .collect(Collectors.toList());
+        ContactEntity contact = contactService.getById(contactId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid contact id"));
+        return phoneNumberService.getForContact(contact).stream().map(PhoneNumber::fromEntity).collect(toList());
     }
 
     @Data
@@ -48,10 +49,7 @@ public class PhoneNumberResource {
         private String number;
 
         public static PhoneNumber fromEntity(PhoneNumberEntity entity) {
-            return PhoneNumber.builder()
-                    .type(entity.getType())
-                    .number(entity.getNumber())
-                    .build();
+            return PhoneNumber.builder().type(entity.getType()).number(entity.getNumber()).build();
         }
     }
 }

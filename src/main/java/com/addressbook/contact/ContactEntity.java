@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.apache.commons.lang3.StringUtils.isAllBlank;
@@ -35,7 +36,7 @@ public class ContactEntity extends BaseEntity {
     private String email;
     @Valid
     private AddressEntity address;
-    @OneToMany(mappedBy = "contact", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL)
     private Collection<@Valid PhoneNumberEntity> phoneNumbers;
 
     @AssertTrue(message = "Both FirstName and Last Name can not be blank.")
@@ -49,5 +50,11 @@ public class ContactEntity extends BaseEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public void addPhoneNumber(PhoneNumberEntity phoneNumber) {
+        phoneNumbers = phoneNumbers == null ? new ArrayList<>() : phoneNumbers;
+        phoneNumbers.add(phoneNumber);
+        phoneNumber.setContact(this);
     }
 }

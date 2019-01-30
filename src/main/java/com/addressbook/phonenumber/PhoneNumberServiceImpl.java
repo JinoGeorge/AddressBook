@@ -1,5 +1,6 @@
 package com.addressbook.phonenumber;
 
+import com.addressbook.contact.ContactEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,8 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
     }
 
     @Override
-    public Collection<PhoneNumberEntity> getForContact(UUID contactId) {
-        return phoneNumberRepository.findByContactId(contactId);
+    public Collection<PhoneNumberEntity> getForContact(ContactEntity contact) {
+        return phoneNumberRepository.findByContact(contact);
     }
 
     @Override
