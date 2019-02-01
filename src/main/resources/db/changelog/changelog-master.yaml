@@ -1,3 +1,10 @@
 databaseChangeLog:
-   - includeAll:
-       path: classpath*:db/changelog/migrations/
+  - include:
+      file: 001-contact.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 002-phone-number.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 003-oauth2.yaml
+      relativeToChangelogFile: true

@@ -25,7 +25,7 @@ import static java.util.stream.Collectors.toList;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
-@RequestMapping("api/contacts")
+@RequestMapping("contacts")
 public class ContactResource {
 
     private ContactService contactService;

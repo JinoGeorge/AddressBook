@@ -18,7 +18,7 @@ import java.util.UUID;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("api/phonenumbers")
+@RequestMapping("phonenumbers")
 public class PhoneNumberResource {
 
     private PhoneNumberService phoneNumberService;
