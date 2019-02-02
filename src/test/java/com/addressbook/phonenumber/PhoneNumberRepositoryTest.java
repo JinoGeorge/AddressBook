@@ -26,8 +26,8 @@ class PhoneNumberRepositoryTest {
         PhoneNumberEntity phone1 = new PhoneNumberEntity(PhoneNumberEntity.Type.MOBILE, "0151-12345678");
         PhoneNumberEntity phone2 = new PhoneNumberEntity(PhoneNumberEntity.Type.HOME, "089-12345");
         PhoneNumberEntity phone3 = new PhoneNumberEntity(PhoneNumberEntity.Type.WORK, "089-67890");
-        ContactEntity contact1 = new ContactEntity("MR.", "Adam", "Simon", "adam@test.com");
-        ContactEntity contact2 = new ContactEntity("MS.", "Eve", "Matt", "eve@test.com");
+        ContactEntity contact1 = new ContactEntity("Adam", "Simon", "adam@test.com");
+        ContactEntity contact2 = new ContactEntity("Eve", "Matt", "eve@test.com");
         contact1.addPhoneNumber(phone1);
         contact1.addPhoneNumber(phone2);
         contact2.addPhoneNumber(phone3);

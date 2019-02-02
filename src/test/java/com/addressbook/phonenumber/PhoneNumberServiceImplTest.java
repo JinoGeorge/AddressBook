@@ -54,7 +54,7 @@ class PhoneNumberServiceImplTest {
     void getForContact() {
         // given
         UUID id = UUID.randomUUID();
-        ContactEntity contact = new ContactEntity("MR.", "Adam", "Simon", "adam@test.com");
+        ContactEntity contact = new ContactEntity("Adam", "Simon", "adam@test.com");
         ReflectionTestUtils.setField(contact, "id", id);
         PhoneNumberEntity phone1 = new PhoneNumberEntity(contact, PhoneNumberEntity.Type.MOBILE, "0151-12345678");
         PhoneNumberEntity phone2 = new PhoneNumberEntity(contact, PhoneNumberEntity.Type.HOME, "089-12345");

@@ -40,7 +40,7 @@ public class PhoneNumberEntity extends BaseEntity {
     @NotBlank
     private final String number;
 
-    enum Type {
+    public enum Type {
         HOME, WORK, MOBILE
     }
 }

@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,14 +36,13 @@ class ContactServiceImplTest {
         // given
         UUID id = UUID.randomUUID();
         when(contactRepository.findById(id))
-                .thenReturn(Optional.of(new ContactEntity("MR.", "Adam", "Simon", "test@test.com")));
+                .thenReturn(Optional.of(new ContactEntity("Adam", "Simon", "test@test.com")));
 
         // when
         Optional<ContactEntity> contactOptional = contactService.getById(id);
 
         // then
         ContactEntity contact = contactOptional.orElseThrow(() -> new NullPointerException("No Contact found!"));
-        assertThat(contact.getTitle()).isEqualToIgnoringCase("MR.");
         assertThat(contact.getFirstName()).isEqualToIgnoringCase("Adam");
         assertThat(contact.getLastName()).isEqualToIgnoringCase("Simon");
         assertThat(contact.getEmail()).isEqualToIgnoringCase("test@test.com");
@@ -52,8 +52,8 @@ class ContactServiceImplTest {
     @Test
     void getAll() {
         // given
-        ContactEntity contact1 = new ContactEntity("MR.", "Adam", "Simon", "adam@test.com");
-        ContactEntity contact2 = new ContactEntity("MS.", "Eve", "Matt", "eve@test.com");
+        ContactEntity contact1 = new ContactEntity("Adam", "Simon", "adam@test.com");
+        ContactEntity contact2 = new ContactEntity("Eve", "Matt", "eve@test.com");
         when(contactRepository.findAll()).thenReturn(Arrays.asList(contact1, contact2));
 
         // when
@@ -68,7 +68,7 @@ class ContactServiceImplTest {
     @Test
     void create() {
         // given
-        ContactEntity contact = new ContactEntity("MR.", "Adam", "Simon", "adam@test.com");
+        ContactEntity contact = new ContactEntity("Adam", "Simon", "adam@test.com");
         when(contactRepository.saveAndFlush(contact)).thenReturn(contact);
 
         // when
@@ -76,5 +76,24 @@ class ContactServiceImplTest {
 
         // then
         verify(contactRepository).saveAndFlush(contact);
+    }
+
+    @Test
+    void findAllByName() {
+        // when
+        contactService.findAllByName("name");
+
+        // then
+        verify(contactRepository).findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase(
+                eq("name"), eq("name"));
+    }
+
+    @Test
+    void findAllByEmail() {
+        // when
+        contactService.findAllByEmail("email");
+
+        // then
+        verify(contactRepository).findByEmailContaining(eq("email"));
     }
 }

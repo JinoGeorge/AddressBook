@@ -11,4 +11,8 @@ public interface ContactService {
     Collection<ContactEntity> getAll();
 
     ContactEntity create(ContactEntity entity);
+
+    Collection<ContactEntity> findAllByName(String name);
+
+    Collection<ContactEntity> findAllByEmail(String email);
 }

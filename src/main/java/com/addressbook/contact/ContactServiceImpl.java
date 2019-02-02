@@ -31,4 +31,14 @@ public class ContactServiceImpl implements ContactService {
     public ContactEntity create(ContactEntity entity) {
         return contactRepository.saveAndFlush(entity);
     }
+
+    @Override
+    public Collection<ContactEntity> findAllByName(String name) {
+        return contactRepository.findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase(name, name);
+    }
+
+    @Override
+    public Collection<ContactEntity> findAllByEmail(String email) {
+        return contactRepository.findByEmailContaining(email);
+    }
 }

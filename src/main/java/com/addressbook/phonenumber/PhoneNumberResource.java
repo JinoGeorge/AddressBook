@@ -1,6 +1,7 @@
 package com.addressbook.phonenumber;
 
 import com.addressbook.contact.ContactEntity;
+import com.addressbook.contact.ContactNotFoundException;
 import com.addressbook.contact.ContactService;
 import lombok.Builder;
 import lombok.Data;
@@ -35,16 +36,15 @@ public class PhoneNumberResource {
     }
 
     @GetMapping(params = "contactId")
-    public Collection<PhoneNumber> getForContact(@RequestParam("contactId") @NotNull UUID contactId) {
+    public Collection<PhoneNumber> getByContact(@RequestParam("contactId") @NotNull UUID contactId) {
         ContactEntity contact = contactService.getById(contactId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid contact id"));
+                .orElseThrow(() -> new ContactNotFoundException("Could not find the contact."));
         return phoneNumberService.getForContact(contact).stream().map(PhoneNumber::fromEntity).collect(toList());
     }
 
     @Data
     @Builder
     public static class PhoneNumber {
-
         private PhoneNumberEntity.Type type;
         private String number;
 

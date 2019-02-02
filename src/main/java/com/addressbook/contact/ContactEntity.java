@@ -45,8 +45,7 @@ public class ContactEntity extends BaseEntity {
     }
 
     @Valid
-    public ContactEntity(String title, String firstName, String lastName, @Email String email) {
-        this.title = title;
+    public ContactEntity(String firstName, String lastName, @Email String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
