@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface PhoneNumberService {
 
-    Optional<PhoneNumberEntity> getById(UUID id);
+    Optional<PhoneNumberEntity> getById(String id);
 
     Collection<PhoneNumberEntity> getForContact(ContactEntity contact);
 

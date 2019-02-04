@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PhoneNumberServiceImpl implements PhoneNumberService {
@@ -19,7 +18,7 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
     }
 
     @Override
-    public Optional<PhoneNumberEntity> getById(UUID id) {
+    public Optional<PhoneNumberEntity> getById(String id) {
         return phoneNumberRepository.findById(id);
     }
 

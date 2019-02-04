@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004<x
+      author: jino.george
+      changes:
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: char(36)
+                  constraints:
+                    references: user(id)
+                    foreignKeyName: fk_role_user
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

@@ -35,7 +35,7 @@ class PhoneNumberServiceImplTest {
     @Test
     void getById() {
         // given
-        UUID id = UUID.randomUUID();
+        String id = UUID.randomUUID().toString();
         when(phoneNumberRepository.findById(id))
                 .thenReturn(Optional.of(new PhoneNumberEntity(PhoneNumberEntity.Type.MOBILE, "0151-12345678")));
 
@@ -53,7 +53,7 @@ class PhoneNumberServiceImplTest {
     @Test
     void getForContact() {
         // given
-        UUID id = UUID.randomUUID();
+        String id = UUID.randomUUID().toString();
         ContactEntity contact = new ContactEntity("Adam", "Simon", "adam@test.com");
         ReflectionTestUtils.setField(contact, "id", id);
         PhoneNumberEntity phone1 = new PhoneNumberEntity(contact, PhoneNumberEntity.Type.MOBILE, "0151-12345678");

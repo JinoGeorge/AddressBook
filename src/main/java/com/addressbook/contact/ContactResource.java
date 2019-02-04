@@ -21,7 +21,6 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
@@ -38,7 +37,7 @@ public class ContactResource {
     }
 
     @GetMapping("{id}")
-    public Contact get(@PathVariable @NotNull UUID id) {
+    public Contact get(@PathVariable @NotNull String id) {
         return contactService.getById(id)
                 .map(Contact::fromEntity)
                 .orElseThrow(() -> new ContactNotFoundException("Could not find a contact with the given id."));

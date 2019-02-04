@@ -2,11 +2,10 @@ package com.addressbook.contact;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface ContactService {
 
-    Optional<ContactEntity> getById(UUID id);
+    Optional<ContactEntity> getById(String id);
 
     Collection<ContactEntity> getAll();
 

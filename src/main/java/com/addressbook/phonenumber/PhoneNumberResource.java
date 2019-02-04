@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
-import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
@@ -31,12 +30,12 @@ public class PhoneNumberResource {
     }
 
     @GetMapping("{id}")
-    public PhoneNumber get(@PathVariable @NotNull UUID id) {
+    public PhoneNumber get(@PathVariable @NotNull String id) {
         return phoneNumberService.getById(id).map(PhoneNumber::fromEntity).orElse(null);
     }
 
     @GetMapping(params = "contactId")
-    public Collection<PhoneNumber> getByContact(@RequestParam("contactId") @NotNull UUID contactId) {
+    public Collection<PhoneNumber> getByContact(@RequestParam("contactId") @NotNull String contactId) {
         ContactEntity contact = contactService.getById(contactId)
                 .orElseThrow(() -> new ContactNotFoundException("Could not find the contact."));
         return phoneNumberService.getForContact(contact).stream().map(PhoneNumber::fromEntity).collect(toList());

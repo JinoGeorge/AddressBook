@@ -6,5 +6,8 @@ databaseChangeLog:
       file: 002-phone-number.yaml
       relativeToChangelogFile: true
   - include:
-      file: 003-oauth2.yaml
+      file: 003-user.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 004-role.yaml
       relativeToChangelogFile: true

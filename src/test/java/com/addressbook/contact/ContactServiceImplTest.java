@@ -34,7 +34,7 @@ class ContactServiceImplTest {
     @Test
     void getById() {
         // given
-        UUID id = UUID.randomUUID();
+        String id = UUID.randomUUID().toString();
         when(contactRepository.findById(id))
                 .thenReturn(Optional.of(new ContactEntity("Adam", "Simon", "test@test.com")));
 

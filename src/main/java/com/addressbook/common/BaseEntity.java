@@ -4,13 +4,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode
@@ -19,9 +19,10 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id
-    @GeneratedValue
-    @NotNull
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(columnDefinition = "CHAR(36)")
-    private final UUID id;
+    @NotNull
+    private final String id;
 }
 
