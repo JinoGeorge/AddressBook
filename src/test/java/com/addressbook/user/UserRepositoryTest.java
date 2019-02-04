@@ -1,4 +1,4 @@
-package com.addressbook.User;
+package com.addressbook.user;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
