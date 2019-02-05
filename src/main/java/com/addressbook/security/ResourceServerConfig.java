@@ -22,7 +22,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/user").access("hasRole(ADMIN)")
+                .antMatchers("/users/**").hasRole("ADMIN")
                 .antMatchers("/phonenumbers/**", "/contacts/**").authenticated();
     }
 }

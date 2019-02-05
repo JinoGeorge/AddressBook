@@ -34,7 +34,6 @@ public class PhoneNumberEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contact_id", nullable = false)
     private ContactEntity contact;
-    @NotNull
     @Enumerated(EnumType.STRING)
     private final Type type;
     @NotBlank

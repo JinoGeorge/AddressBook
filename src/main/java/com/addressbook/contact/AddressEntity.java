@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -17,8 +18,10 @@ import javax.persistence.Embeddable;
 public class AddressEntity {
     private String street;
     private String houseNumber;
+    @NotBlank
     private String city;
     private String state;
+    @NotBlank
     private String country;
     private String postalCode;
 }

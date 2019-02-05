@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,13 +34,14 @@ public class ContactEntity extends BaseEntity {
     private String lastName;
     private LocalDate birthDate;
     @Email
+    @NotBlank
     private String email;
     @Valid
     private AddressEntity address;
     @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL)
-    private Collection<@Valid PhoneNumberEntity> phoneNumbers;
+    private Collection<@Valid PhoneNumberEntity> phoneNumbers = new ArrayList<>();
 
-    @AssertTrue(message = "Both FirstName and Last Name can not be blank.")
+    @AssertTrue(message = "Both firstName and lastName can not be blank.")
     private boolean isValidNames() {
         return !isAllBlank(firstName, lastName);
     }
@@ -52,7 +54,6 @@ public class ContactEntity extends BaseEntity {
     }
 
     public void addPhoneNumber(PhoneNumberEntity phoneNumber) {
-        phoneNumbers = phoneNumbers == null ? new ArrayList<>() : phoneNumbers;
         phoneNumbers.add(phoneNumber);
         phoneNumber.setContact(this);
     }

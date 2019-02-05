@@ -2,6 +2,7 @@ package com.addressbook.contact;
 
 import com.addressbook.phonenumber.PhoneNumberEntity;
 import com.addressbook.phonenumber.PhoneNumberResource.PhoneNumber;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.time.LocalDate;
@@ -23,6 +26,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.StringUtils.isAllBlank;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
@@ -44,19 +48,19 @@ public class ContactResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody @Valid Contact contact) {
+    public ResponseEntity<Void> create(@RequestBody @Valid @NotNull Contact contact) {
         ContactEntity entity = contactService.create(toContactEntity(contact));
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(entity.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
     @GetMapping(params = "name")
-    public List<Contact> findAllByName(@RequestParam("name") String name) {
+    public List<Contact> findAllByName(@RequestParam("name") @NotBlank String name) {
         return contactService.findAllByName(name).stream().map(Contact::fromEntity).collect(toList());
     }
 
     @GetMapping(params = "email")
-    public List<Contact> findAllByEmail(@RequestParam("email") String email) {
+    public List<Contact> findAllByEmail(@RequestParam("email") @NotBlank String email) {
         return contactService.findAllByEmail(email).stream().map(Contact::fromEntity).collect(toList());
     }
 
@@ -64,16 +68,22 @@ public class ContactResource {
         ContactEntity entity = new ContactEntity(contact.getFirstName(), contact.getLastName(), contact.getEmail());
         entity.setTitle(contact.getTitle());
         entity.setBirthDate(contact.getBirthDate());
-        entity.setPhoneNumbers(contact.getPhoneNumbers().stream().map(this::toPhoneNumberEntity).collect(toList()));
+        entity.setPhoneNumbers(contact.getPhoneNumbers() != null ? contact.getPhoneNumbers().stream().map(this::toPhoneNumberEntity).collect(toList()) : null);
         entity.setAddress(toAddressEntity(contact.getAddress()));
         return entity;
     }
 
     private PhoneNumberEntity toPhoneNumberEntity(@Valid PhoneNumber phoneNumber) {
+        if (phoneNumber == null) {
+            return null;
+        }
         return new PhoneNumberEntity(phoneNumber.getType(), phoneNumber.getNumber());
     }
 
     private AddressEntity toAddressEntity(Address address) {
+        if (address == null) {
+            return null;
+        }
         AddressEntity entity = new AddressEntity();
         entity.setStreet(address.getStreet());
         entity.setHouseNumber(address.getHouseNumber());
@@ -90,11 +100,18 @@ public class ContactResource {
         private String title;
         private String firstName;
         private String lastName;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         private LocalDate birthDate;
         private Address address;
         @Email
+        @NotBlank
         private String email;
         private Collection<@Valid PhoneNumber> phoneNumbers;
+
+        @AssertTrue(message = "Both FirstName and Last Name can not be blank.")
+        private boolean isValidNames() {
+            return !isAllBlank(firstName, lastName);
+        }
 
         public static Contact fromEntity(ContactEntity entity) {
             return Contact.builder()
@@ -117,12 +134,17 @@ public class ContactResource {
     static class Address {
         private String street;
         private String houseNumber;
+        @NotBlank
         private String city;
         private String state;
+        @NotBlank
         private String country;
         private String postalCode;
 
         public static Address fromEntity(AddressEntity entity) {
+            if (entity == null) {
+                return null;
+            }
             return Address.builder()
                     .street(entity.getStreet())
                     .houseNumber(entity.getHouseNumber())

@@ -14,9 +14,10 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    private static final String CLIENT_ID = "my-trusted-client";
-    private static final String SECRET = "secret";
+    private static final String CLIENT_ID = "client_id";
+    private static final String SECRET = "client_secret";
     private static final int ACCESS_TOKEN_VALIDITY_SECONDS = 5000;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -42,7 +43,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .inMemory()
                 .withClient(CLIENT_ID)
                 .authorizedGrantTypes("client_credentials", "password")
-                .authorities("ROLE_CLIENT","ROLE_TRUSTED_CLIENT")
+                .authorities("ROLE_USER", "ROLE_ADMIN")
                 .scopes("read","write")
                 .accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
                 .secret(passwordEncoder.encode(SECRET));

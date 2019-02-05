@@ -1,8 +1,6 @@
 package com.addressbook.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,13 +32,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .authorities(getAuthority(user.getRoles()))
+                .roles(getAuthority(user.getRoles()).toArray(new String[1]))
                 .build();
     }
 
-    private Collection<? extends GrantedAuthority> getAuthority(Set<RoleEntity> roles) {
+    private Collection<String> getAuthority(Set<RoleEntity> roles) {
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().toUpperCase()))
+                .map(role -> role.getName().toUpperCase())
                 .collect(Collectors.toList());
     }
 

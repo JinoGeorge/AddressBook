@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
@@ -45,6 +46,7 @@ public class PhoneNumberResource {
     @Builder
     public static class PhoneNumber {
         private PhoneNumberEntity.Type type;
+        @NotBlank
         private String number;
 
         public static PhoneNumber fromEntity(PhoneNumberEntity entity) {
